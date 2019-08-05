@@ -40,10 +40,13 @@ class CandleStickVis{
         });
 
 
-        let minDate= data[data.length - 1].Date;
-        let maxDate = data[0].Date;
+        let minDate= new Date(data[data.length - 1].Date);
+        let maxDate = new Date(data[0].Date);
+        minDate = minDate.setDate(minDate.getDate() - 3);
+        maxDate = maxDate.setDate(maxDate.getDate() + 3);
 
-        const xAxisScale = d3.scaleTime().domain([new Date(minDate), new Date(maxDate)]).range([0, (this.svgWidth -40)])
+
+        const xAxisScale = d3.scaleTime().domain([minDate, maxDate]).range([0, (this.svgWidth -40)])
 
         const yAxisScale = d3.scaleLinear()
             .domain([(.9 * marketMin),(1.1 * marketMax)]) // input
