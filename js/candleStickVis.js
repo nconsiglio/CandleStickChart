@@ -10,7 +10,7 @@ class CandleStickVis{
         this.margin = {top: 10, right: 20, bottom: 20, left: 50};
         this.svgBounds = chartDiv.node().getBoundingClientRect();
         this.svgWidth = (this.svgBounds.width) - this.margin.left - this.margin.right;
-        this.svgHeight = 400;
+        this.svgHeight = 500;
 
         //add the svg to the div
         this.svg = chartDiv.append("svg")
@@ -46,7 +46,7 @@ class CandleStickVis{
         const xAxisScale = d3.scaleTime().domain([new Date(minDate), new Date(maxDate)]).range([0, (this.svgWidth -40)])
 
         const yAxisScale = d3.scaleLinear()
-            .domain([(.7 * marketMin),(1.3 * marketMax)]) // input
+            .domain([(.9 * marketMin),(1.1 * marketMax)]) // input
             .range([(this.svgHeight - this.margin.bottom), this.margin.top]);
 
 
@@ -124,7 +124,7 @@ class CandleStickVis{
             .attr("y2",d => { return yAxisScale(d.Low)})
             .attr("stroke","black")
             .attr("stroke-width", 1)
-        
+
 
     }
 
