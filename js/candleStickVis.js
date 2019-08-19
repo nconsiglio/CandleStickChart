@@ -91,42 +91,81 @@ class CandleStickVis{
             .attr('transform', 'translate(' + 15 + ', ' + (this.svgHeight / 2) + ')rotate(-90)');
 
 
+        //Add candles
+        let candleBody =  this.svg.append("g").selectAll("rect")
+            .data(data)
+
+
+        let canndleBodyEnter= candleBody.enter().append("rect")
+            .attr("id", d => d.Date)
+            .attr("class", "candles")
+            .attr("x", d => { return this.margin.left + xAxisScale(new Date(d.Date)) - 1.5})
+            .attr("y", d =>{
+        if((d.Close - d.Open) < 0){
+             return yAxisScale(d.Open)
+        }else{
+            return yAxisScale(d.Close)
+        }
+    })
+            .attr("width",3)
+            .attr("height", d => { return Math.abs(yAxisScale(d.Close) - yAxisScale(d.Open))})
+            .attr("fill", d => {
+                if((d.Close - d.Open) < 0){
+                    return "red"
+                }else{
+                    return "green"
+                }
+            });
+
+
+        candleBody = candleBody.merge(canndleBodyEnter)
+
+
+
+
+
+
+        let wicks = this.svg.append("g").selectAll(".wick")
+            .data(data)
+
+
+
 
         //add center wicks
-        this.svg.selectAll(".wicks")
-            .data(data)
-            .enter().append("line")
+       wicks.enter().append("line")
+           .attr("class", "wick")
+             .attr("id", d => d.Date)
             .attr("x1", d => { return this.margin.left + xAxisScale(new Date(d.Date))})
             .attr("x2",d => { return  this.margin.left + xAxisScale(new Date(d.Date))})
             .attr("y1", d => { return yAxisScale(d.High)})
             .attr("y2",d => { return yAxisScale(d.Low)})
             .attr("stroke","black")
-            .attr("stroke-width", 1)
+            .attr("stroke-width", .5)
 
 
         //add top wick
-        this.svg.selectAll(".wicks")
-            .data(data)
-            .enter().append("line")
+        wicks.enter().append("line")
+            .attr("class", "wick")
+            .attr("id", d => d.Date)
             .attr("x1", d => { return this.margin.left + xAxisScale(new Date(d.Date)) + 1})
             .attr("x2",d => { return  this.margin.left + xAxisScale(new Date(d.Date)) - 1})
             .attr("y1", d => { return yAxisScale(d.High)})
             .attr("y2",d => { return yAxisScale(d.High)})
             .attr("stroke","black")
-            .attr("stroke-width", 1)
+            .attr("stroke-width", .5)
 
 
 
         //add bottom wick
-        this.svg.selectAll(".wicks")
-            .data(data)
-            .enter().append("line")
+        wicks.enter().append("line")
+            .attr("class", "wick")
+            .attr("id", d => d.Date)
             .attr("x1", d => { return this.margin.left + xAxisScale(new Date(d.Date)) + 1})
             .attr("x2",d => { return  this.margin.left + xAxisScale(new Date(d.Date)) - 1})
             .attr("y1", d => { return yAxisScale(d.Low)})
             .attr("y2",d => { return yAxisScale(d.Low)})
             .attr("stroke","black")
-            .attr("stroke-width", 1)
+            .attr("stroke-width", .5);
 
 
     }
