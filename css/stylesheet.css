@@ -4,3 +4,16 @@
 }
 
 
+.d3-tip {
+    line-height: .5;
+    height: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: auto;
+    border-style: groove;
+    padding: 6px;
+    background: #FFFFFF;
+    color: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    pointer-events: none;
+}
